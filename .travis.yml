@@ -1,0 +1,20 @@
+language: generic 
+# super user permissions required to use docker
+sudo: required
+
+# make sure docker CLI is installed to start
+services:
+  - docker
+
+# commands executed before tests are run - setup needed
+# cannot copy image id, so need to tag it with a name
+# use Dockerfile.dev so we have access to all our code and dependencies
+before_install:
+  - docker build -t hokie18241/docker-react -f Dockerfile.dev .
+
+# Travis assumes if error code is anything but 0, there is a problem
+# needs to override default starting commands - npm run test instead
+# do not want menu we normally get, which waits for our input
+# need to exit after tests are run, not wait for us to respond
+script:
+  - docker run -e CI=true hokie18241/docker-react npm run test
