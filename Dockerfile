@@ -1,11 +1,11 @@
 # first phase - run dependencies and npm run build
 FROM node:alpine
 WORKDIR '/app'
-COPY package.json .
+COPY package*.json ./
 RUN npm install
 # don't need volumes because we're done developing
 # this is for production, we are not making changes
-COPY . .
+COPY ./ ./
 RUN npm run build
 
 # we now have a build folder now in /app/build 
