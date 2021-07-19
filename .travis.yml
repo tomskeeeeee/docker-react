@@ -18,3 +18,17 @@ before_install:
 # need to exit after tests are run, not wait for us to respond
 script:
   - docker run -e CI=true hokie18241/docker-react npm run test
+
+  #once tests pass, automatically deploy to AWS
+  deploy:
+    provider: elasticbeanstalk
+    region: "us-east-2"
+    app: "docker-react"
+    env: "Dockerreact-env"
+    bucket_name: "elasticbeanstalk-us-east-2-412835021417"
+    bucket_path: "docker-react"
+on:
+  branch: master
+access_key_id: $AWS_ACCESS_KEY
+secret_access_key: $AWS_SECRET_KEY
+
