@@ -10,6 +10,8 @@ RUN npm run build
 
 # we now have a build folder now in /app/build 
 FROM nginx
+# tell elasticbeanstalk to listen on a port (map the port)
+EXPOSE 80
 # copy from previous phase, from given folder
 # to new folder given in nginx documentation
 # default command of nginx image is to start nginx
